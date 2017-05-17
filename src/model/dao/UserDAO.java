@@ -1,4 +1,4 @@
-package dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,20 +62,54 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public boolean deleteUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+		// delete from user where login = "1";
+		boolean success = false;
+		sql = "DELETE FROM user WHERE login = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, user.getLogin());
+			int rows = preparedStatement.executeUpdate();
+			if (rows != 0)
+				success = true;
+		} catch (SQLException e) {
+			System.out.println("Error en el borrado de datos de la BD");
+
+		}
+		return success;
 	}
 
 	@Override
 	public boolean updateUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean success = false;
+		// update user set password="pp",code="ccc",gender="ggg" where login = "
+		sql = "UPDATE user SET password = ?, code = ?, gender = ?"
+				+ "WHERE login = ?";
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, user.getPassword());
+			preparedStatement.setString(2, user.getCode());
+			preparedStatement.setString(3, user.getGender());
+			preparedStatement.setString(4, user.getLogin());
+			int rows = preparedStatement.executeUpdate();
+			if (rows != 0)
+				success = true;
+		} catch (SQLException e) {
+			System.out.println("Error en la actualización de datos de la BD");
+
+		}
+		
+		return success;
 	}
 	public static void main(String[] args) {
 		UserDAO userDAO = new UserDAO();
 		User u = new User("1", "2", "3", "4");
 		System.out.println(userDAO.addUser(u));
+	//	u.setLogin("55");
+	//	System.out.println(userDAO.deleteUser(u));
+		User u2 = new User("1", "22", "33", "44");
+		System.out.println(userDAO.updateUser(u2));
 		Set<User> listaUsuarios = userDAO.getUsers();
+		System.out.println();
 		System.out.println(listaUsuarios);
 	}
 
