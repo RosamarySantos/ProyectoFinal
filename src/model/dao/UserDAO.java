@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import model.ConnectionBD;
 import model.User;
@@ -17,8 +18,8 @@ public class UserDAO implements IUserDAO {
 	String sql;
 	PreparedStatement preparedStatement;
 	@Override
-	public Set<User> getUsers() {
-		Set<User> listUsers = new HashSet<>();
+	public List<User> getUsers() {
+		List<User> listUsers = new ArrayList<>();
 		// SELECT * FROM user;
 		sql = "SELECT * FROM user";
 		try {
@@ -108,7 +109,7 @@ public class UserDAO implements IUserDAO {
 	//	System.out.println(userDAO.deleteUser(u));
 		User u2 = new User("1", "22", "33", "44");
 		System.out.println(userDAO.updateUser(u2));
-		Set<User> listaUsuarios = userDAO.getUsers();
+		List<User> listaUsuarios = userDAO.getUsers();
 		System.out.println();
 		System.out.println(listaUsuarios);
 	}
